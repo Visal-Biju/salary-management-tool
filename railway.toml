@@ -1,0 +1,10 @@
+[build]
+builder = "NIXPACKS"
+
+[[services]]
+name = "backend"
+source = "backend"
+
+[[services]]
+name = "frontend"
+source = "frontend"
