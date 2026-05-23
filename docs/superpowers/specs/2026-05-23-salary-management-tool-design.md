@@ -194,9 +194,17 @@ No E2E tests — out of scope for this assessment.
 
 ---
 
+## Out of Scope (Phase 1)
+
+**Authentication & Authorization** are deferred to Phase 2. The app is accessible without login in Phase 1 — no session management, no role-based access control, no JWT/OAuth. Phase 2 will add HR Manager login, protected routes, and role-based permissions.
+
+---
+
 ## Additional Meaningful Metrics (beyond spec)
 
 - **Headcount by country** — table showing employee distribution
 - **Top 5 highest-paid employees** — quick view for HR anomaly detection
 - **Salary distribution by department** — complements job title view
 - **Tenure insight** — avg salary by years since `hired_at` (grouped by 0–1yr, 1–3yr, 3–5yr, 5yr+)
+- **Salary currency converter** — convert any displayed salary into a target currency (USD, INR, AED, GBP, EUR, etc.) via a currency selector on the Insights page. Rates stored as static defaults at build time (no external API dependency); HR Managers can override rates manually. All salaries are stored in USD internally; conversion is display-only.
+
