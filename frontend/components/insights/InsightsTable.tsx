@@ -15,14 +15,17 @@ type SortKey = 'job_title' | 'country' | 'avg_salary' | 'headcount';
 interface Props {
   stats: JobTitleStat[];
   selectedCountry: string;
+  selectedJobTitle: string;
   currency: CurrencyCode;
 }
 
-export function InsightsTable({ stats, selectedCountry, currency }: Props) {
+export function InsightsTable({ stats, selectedCountry, selectedJobTitle, currency }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>('avg_salary');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
 
-  const filtered = selectedCountry ? stats.filter((s) => s.country === selectedCountry) : stats;
+  const filtered = stats
+    .filter((s) => !selectedCountry || s.country === selectedCountry)
+    .filter((s) => !selectedJobTitle || s.job_title === selectedJobTitle);
   const sorted = [...filtered].sort((a, b) => {
     const aVal = a[sortKey];
     const bVal = b[sortKey];

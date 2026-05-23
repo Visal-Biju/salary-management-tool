@@ -11,6 +11,7 @@ import { CurrencyCode } from '@/lib/currencies';
 
 export default function InsightsPage() {
   const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedJobTitle, setSelectedJobTitle] = useState('');
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
 
   const { data: summary, isLoading: summaryLoading } = useOrgSummary();
@@ -18,6 +19,9 @@ export default function InsightsPage() {
   const { data: countryStats } = useCountryStats();
 
   const countries = countryStats?.map((s) => s.country).sort() ?? [];
+  const jobTitles = jobTitleStats
+    ? Array.from(new Set(jobTitleStats.map((s) => s.job_title))).sort()
+    : [];
 
   return (
     <div className="space-y-6">
@@ -48,14 +52,27 @@ export default function InsightsPage() {
       {jobTitleStats && (
         <div className="space-y-2">
           <h2 className="text-lg font-semibold">Avg Salary by Job Title</h2>
-          <SalaryBarChart stats={jobTitleStats} selectedCountry={selectedCountry} />
+          <SalaryBarChart stats={jobTitleStats} selectedCountry={selectedCountry} currency={currency} />
         </div>
       )}
 
       {jobTitleStats && (
         <div className="space-y-2">
-          <h2 className="text-lg font-semibold">Breakdown by Job Title + Country</h2>
-          <InsightsTable stats={jobTitleStats} selectedCountry={selectedCountry} currency={currency} />
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Breakdown by Job Title + Country</h2>
+            <Select value={selectedJobTitle} onValueChange={(v) => setSelectedJobTitle(!v || v === 'all' ? '' : v)}>
+              <SelectTrigger className="w-52">
+                <SelectValue placeholder="All job titles" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All job titles</SelectItem>
+                {jobTitles.map((t) => (
+                  <SelectItem key={t} value={t}>{t}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <InsightsTable stats={jobTitleStats} selectedCountry={selectedCountry} selectedJobTitle={selectedJobTitle} currency={currency} />
         </div>
       )}
     </div>

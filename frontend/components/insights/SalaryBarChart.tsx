@@ -2,14 +2,15 @@
 
 import { JobTitleStat } from '@/types';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { formatSalaryCompact } from '@/lib/formatters';
+import { formatConvertedSalary, CurrencyCode } from '@/lib/currencies';
 
 interface Props {
   stats: JobTitleStat[];
   selectedCountry: string;
+  currency: CurrencyCode;
 }
 
-export function SalaryBarChart({ stats, selectedCountry }: Props) {
+export function SalaryBarChart({ stats, selectedCountry, currency }: Props) {
   const filtered = selectedCountry
     ? stats.filter((s) => s.country === selectedCountry)
     : stats;
@@ -37,11 +38,11 @@ export function SalaryBarChart({ stats, selectedCountry }: Props) {
           <CartesianGrid strokeDasharray="3 3" horizontal={false} />
           <XAxis
             type="number"
-            tickFormatter={(v) => formatSalaryCompact(v)}
+            tickFormatter={(v) => formatConvertedSalary(typeof v === 'number' ? v : 0, currency)}
             tick={{ fontSize: 11 }}
           />
           <YAxis type="category" dataKey="job_title" tick={{ fontSize: 11 }} width={115} />
-          <Tooltip formatter={(v) => [formatSalaryCompact(typeof v === 'number' ? v : 0), 'Avg Salary']} />
+          <Tooltip formatter={(v) => [formatConvertedSalary(typeof v === 'number' ? v : 0, currency), 'Avg Salary']} />
           <Bar dataKey="avg_salary" fill="#3b82f6" radius={[0, 3, 3, 0]} />
         </BarChart>
       </ResponsiveContainer>
