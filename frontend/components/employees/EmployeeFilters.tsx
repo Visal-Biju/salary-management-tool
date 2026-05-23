@@ -27,7 +27,7 @@ export function EmployeeFiltersBar({ filters, onChange }: Props) {
         onChange={(e) => update('search', e.target.value)}
         className="w-64"
       />
-      <Select value={filters.country} onValueChange={(v) => update('country', v === 'all' ? '' : v)}>
+      <Select value={filters.country} onValueChange={(v) => update('country', !v || v === 'all' ? '' : v)}>
         <SelectTrigger className="w-44">
           <SelectValue placeholder="All countries" />
         </SelectTrigger>
