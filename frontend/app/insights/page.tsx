@@ -42,7 +42,7 @@ export default function InsightsPage() {
       {summaryLoading || !summary ? (
         <p className="text-muted-foreground">Loading…</p>
       ) : (
-        <KpiCards summary={summary} />
+        <KpiCards summary={summary} currency={currency} />
       )}
 
       {jobTitleStats && (

@@ -1,17 +1,18 @@
 import { OrgSummary } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { formatSalaryCompact } from '@/lib/formatters';
+import { formatConvertedSalary, CurrencyCode } from '@/lib/currencies';
 
 interface Props {
   summary: OrgSummary;
+  currency: CurrencyCode;
 }
 
-export function KpiCards({ summary }: Props) {
+export function KpiCards({ summary, currency }: Props) {
   const cards = [
     { title: 'Total Employees', value: summary.total_employees.toLocaleString(), color: 'text-blue-600' },
-    { title: 'Avg Salary', value: formatSalaryCompact(summary.avg_salary), color: 'text-emerald-600' },
-    { title: 'Min Salary', value: formatSalaryCompact(summary.min_salary), color: 'text-red-500' },
-    { title: 'Max Salary', value: formatSalaryCompact(summary.max_salary), color: 'text-violet-600' },
+    { title: 'Avg Salary', value: formatConvertedSalary(summary.avg_salary, currency), color: 'text-emerald-600' },
+    { title: 'Min Salary', value: formatConvertedSalary(summary.min_salary, currency), color: 'text-red-500' },
+    { title: 'Max Salary', value: formatConvertedSalary(summary.max_salary, currency), color: 'text-violet-600' },
     { title: 'Countries', value: String(summary.country_count), color: 'text-amber-600' },
   ];
 

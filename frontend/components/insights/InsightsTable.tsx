@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { JobTitleStat } from '@/types';
-import { formatSalary } from '@/lib/formatters';
-import { convertSalary, CurrencyCode } from '@/lib/currencies';
+import { formatConvertedSalary } from '@/lib/currencies';
+import { CurrencyCode } from '@/lib/currencies';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
@@ -61,7 +61,7 @@ export function InsightsTable({ stats, selectedCountry, currency }: Props) {
             <TableRow key={`${s.job_title}-${s.country}-${i}`}>
               <TableCell>{s.job_title}</TableCell>
               <TableCell>{s.country}</TableCell>
-              <TableCell>{formatSalary(convertSalary(s.avg_salary, currency))}</TableCell>
+              <TableCell>{formatConvertedSalary(s.avg_salary, currency)}</TableCell>
               <TableCell>{s.headcount.toLocaleString()}</TableCell>
             </TableRow>
           ))}
