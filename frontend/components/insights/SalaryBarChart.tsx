@@ -41,7 +41,7 @@ export function SalaryBarChart({ stats, selectedCountry }: Props) {
             tick={{ fontSize: 11 }}
           />
           <YAxis type="category" dataKey="job_title" tick={{ fontSize: 11 }} width={115} />
-          <Tooltip formatter={(v: number) => [formatSalaryCompact(v), 'Avg Salary']} />
+          <Tooltip formatter={(v) => [formatSalaryCompact(typeof v === 'number' ? v : 0), 'Avg Salary']} />
           <Bar dataKey="avg_salary" fill="#3b82f6" radius={[0, 3, 3, 0]} />
         </BarChart>
       </ResponsiveContainer>
